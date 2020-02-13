@@ -56,7 +56,6 @@ def parse_user_input(user_in, allow_symbols):
 
 # Find where func == 0
 def solve(func, lo=0, hi=1):
-    print(f'[{lo:.2e}, {hi:.2e}]')
     # Swap the sign of function if not increasing
     if func(0.7) - func(0.6) < 0:
         return solve(lambda x: -func(x), lo, hi)
@@ -100,14 +99,15 @@ def handle_simple_evaluation(user_in):
     except NameError as e:
         print(f'Error when evaluating "{evaluation}" as Python code')
     except ValueError as e:
-        print(f'Error when evaluating expression. An input of i was given for interest rate but the input was not an equation')
-        print(e)
+        print(f"Error when evaluating expression. An input of i was given for interest rate but the input was not an equation (input did not have an '=')")
 
 
 user_in = ''
 while not user_in.startswith('exit') and not user_in.startswith('quit'):
     try:
-        user_in = input('\n$: ')
+        user_in = input('\n$: ').strip()
+        if not user_in:
+            continue
         handle_simple_evaluation(user_in)
     except Exception as e:
         print(type(e).__name__)
