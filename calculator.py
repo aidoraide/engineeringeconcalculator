@@ -55,7 +55,8 @@ def parse_user_input(user_in, allow_symbols):
 
 
 # Find where func == 0
-def solve(func, lo=0, hi=10000):
+def solve(func, lo=0, hi=1):
+    print(f'[{lo:.2e}, {hi:.2e}]')
     # Swap the sign of function if not increasing
     if func(0.7) - func(0.6) < 0:
         return solve(lambda x: -func(x), lo, hi)
@@ -84,7 +85,7 @@ def handle_simple_evaluation(user_in):
             l, r = user_in.split('=')
             levaluation = parse_user_input(l, True)
             revaluation = parse_user_input(r, True)
-            i = solve(evaluate_for_i(revaluation + '-' + levaluation))
+            i = solve(evaluate_for_i(f'{revaluation} - ({levaluation})'))
             print(f'i = {i}')
             print(f'{user_in}, for i = {round(i, 2)}')
         else:
